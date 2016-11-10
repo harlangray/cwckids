@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Session */
 
-$this->title = $model->ssn_id;
+$this->title = $model->ssn_name;
 $this->params['breadcrumbs'][] = ['label' => 'Sessions', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -16,23 +16,30 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->ssn_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->ssn_id], [
+        <?=
+        Html::a('Delete', ['delete', 'id' => $model->ssn_id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ])
+        ?>
     </p>
 
-    <?= DetailView::widget([
+    <?=
+    DetailView::widget([
         'model' => $model,
         'attributes' => [
             'ssn_id',
             'ssn_name',
             'ssn_date',
-            'ssn_marked_by',
+            [
+                'attribute' => 'ssn_marked_by',
+                'value' => $model->markedBy->username,
+            ],
         ],
-    ]) ?>
+    ])
+    ?>
 
 </div>

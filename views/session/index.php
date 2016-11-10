@@ -27,13 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             [
-                'class' => 'yii\grid\ActionColumn',
+                'class' => 'app\components\ActionColumn',
                 'template' => '{view}{update}{delete}{attendance}',
-                'contentOptions' => ['style' => 'width: 130px;'],
+                'contentOptions' => ['style' => 'width: 250px;'],
                 'header' => 'Actions',
                 'buttons' => [
                     'attendance' => function($url, $model, $key) {
-                        $image = Html::img(yii::$app->urlManager->baseUrl . '/../images/attendance.png');
+                        $image = Html::img(yii::$app->urlManager->baseUrl . '/../images/attendance.png', ['style' => 'margin: 3px;']);
                         return Html::a($image, $url, ['title' => 'Mark Attendance']);
                     }
                         ],

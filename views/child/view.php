@@ -51,7 +51,10 @@ foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
                 'attribute' => 'c_toilet_trained',
                 'format' => 'boolean'
             ],            
-            'c_grade',
+            [
+                'attribute' => 'c_grade',
+                'value' => $model->grade->gd_name,
+            ],
             [
                 'attribute' => 'c_medical_conditions',
                 'format' => 'boolean'

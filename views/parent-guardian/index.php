@@ -32,8 +32,8 @@ foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
         'filterModel' => $searchModel,
         'columns' => [
             [
-                'class' => 'yii\grid\ActionColumn',
-                'contentOptions' => ['style' => 'min-width:80px;']
+                'class' => 'app\components\ActionColumn',
+                'contentOptions' => ['style' => 'min-width:200px;']
                 ],
             'pg_id',
             'pg_name_parent_guardian',

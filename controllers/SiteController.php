@@ -127,4 +127,20 @@ ALTER TABLE `grade`
         }
     }
 
+    public function actionUpdatesession(){
+        $sql = "";
+        $connection = Yii::$app->getDb();
+        
+        $sql = "ALTER TABLE `session_attendance`
+  MODIFY `sat_id` int(11) NOT NULL AUTO_INCREMENT;";
+                
+        $command = $connection->createCommand($sql);        
+      
+        if($command->execute()){
+            echo 'Created Session Table';
+        }
+        else{
+            echo 'Could not execute';
+        }        
+    }
 }
