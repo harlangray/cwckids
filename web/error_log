@@ -1,0 +1,2 @@
+[26-Oct-2016 21:21:43 Australia/Sydney] PHP Fatal error:  Class 'ActiveForm' not found in /home/merillne/cwc.org.au/cwckids/views/reports/medical.php on line 23
+[26-Oct-2016 21:28:16 Australia/Sydney] PHP Fatal error:  Class 'Html' not found in /home/merillne/cwc.org.au/cwckids/views/reports/medical.php on line 29
