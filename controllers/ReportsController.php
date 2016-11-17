@@ -14,6 +14,7 @@ use yii\web\Controller;
 use app\models\ChildSearch;
 use app\models\ParentGuardianSearch;
 use kartik\mpdf\Pdf;
+use app\models\Session;
 
 /**
  * Description of ReportsController
@@ -120,7 +121,46 @@ class ReportsController extends Controller {
     }
 
     public function actionAttendance(){
+        $fromDate = isset($_POST['fromDate'])?$_POST['fromDate']:date('Y-m-d', strtotime('-1 month'));
+        $toDate = isset($_POST['toDate'])?$_POST['toDate']:date('Y-m-d');
         
+        $whereCond = " s.ssn_date >= '$fromDate' AND s.ssn_date <= '$toDate' ";
+
+        //~~~sessions~~~~
+        $sql = "SELECT s.ssn_id, s.ssn_name, s.ssn_date FROM session s WHERE $whereCond ORDER BY s.ssn_date";
+        
+        $connection = Yii::$app->getDb();
+        $command = $connection->createCommand($sql);
+        $result = $command->queryAll();
+        
+        $sessionSelect = '';
+        foreach ($result as $row){
+            $sessionSelect .= " SUM(IF(s.ssn_id = {$row['ssn_id']}, sa.sat_present, 0)) AS session_{$row['ssn_id']}, ";
+            $sessionCols["session_{$row['ssn_id']}"] = $row['ssn_date'];
+        }  //die($sessionSelect);      
+        //~~~~~~~~~~~~~~~
+        
+        $sql = "SELECT $sessionSelect c.c_id, c.c_first_name, c.c_surname, 
+            SUM(IF(sa.sat_present = 1, 1, 0)) as present, 
+            SUM(IF(sa.sat_present = 0, 1, 0)) AS absent 
+            FROM `child` c LEFT JOIN session_attendance sa ON c.c_id = sa.sat_student_id
+            LEFT JOIN session s ON sa.sat_session_id = s.ssn_id
+            WHERE sa.sat_id IS NOT NULL AND $whereCond 
+             
+            GROUP BY c.c_id ORDER BY c.c_first_name, c.c_surname";
+        //die($sql);
+        $connection = Yii::$app->getDb();
+        $command = $connection->createCommand($sql);
+        $result = $command->queryAll();
+                
+       return $this->render('attendance', [
+                    'fromDate' => $fromDate,
+                    'toDate' => $toDate,
+                    'sessionCols' => $sessionCols,
+                    'result' => $result,
+        ]);    
+       
+            
     }
 
     public function actionTestpdf() {

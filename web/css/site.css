@@ -101,6 +101,9 @@ a.desc:after {
 .sirName{
     width: 150px;
 }
+.fullName{
+    width: 200px;
+}
 .medicalNote{
     width: 300px;
 }
@@ -135,4 +138,7 @@ a.desc:after {
 }
 .oddRow{
     background-color: #D3D3D3;
+}
+.date{
+    width:100px;
 }
