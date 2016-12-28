@@ -2,6 +2,7 @@
 use yii\jui\DatePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\SessionAttendance;
 ?>
 
     <?php $form = ActiveForm::begin(); ?>
@@ -57,7 +58,20 @@ $imgAbsent = Html::img(yii::$app->urlManager->baseUrl . '/../images/absent.png')
 
 foreach ($sessionCols as $field => $columnName){
     ?>
-<td class='<?= $oddeven; ?>'><?= $row[$field]?$imgPresent:$imgAbsent; ?></td>
+<td class='<?= $oddeven; ?>'>
+    <?php        
+        $sessionID = $sessionColIDs[$field];
+        $childID = $row['c_id'];
+        $sessionAttendance = SessionAttendance::find()->where("sat_session_id = $sessionID AND sat_student_id = $childID")->one();
+        if(!isset($sessionAttendance)){
+            echo '_';
+        }
+        else{
+            echo $row[$field]?$imgPresent:$imgAbsent;;
+        }        
+    ?>
+    
+</td>
 <?php
 }
 ?>

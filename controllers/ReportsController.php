@@ -134,9 +134,12 @@ class ReportsController extends Controller {
         $result = $command->queryAll();
         
         $sessionSelect = '';
+        $sessionCols = [];
+        $sessionColIDs = [];
         foreach ($result as $row){
             $sessionSelect .= " SUM(IF(s.ssn_id = {$row['ssn_id']}, sa.sat_present, 0)) AS session_{$row['ssn_id']}, ";
             $sessionCols["session_{$row['ssn_id']}"] = $row['ssn_date'];
+            $sessionColIDs["session_{$row['ssn_id']}"] = $row['ssn_id'];
         }  //die($sessionSelect);      
         //~~~~~~~~~~~~~~~
         
@@ -157,6 +160,7 @@ class ReportsController extends Controller {
                     'fromDate' => $fromDate,
                     'toDate' => $toDate,
                     'sessionCols' => $sessionCols,
+                    'sessionColIDs' => $sessionColIDs,
                     'result' => $result,
         ]);    
        

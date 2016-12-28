@@ -14,6 +14,10 @@ use Yii;
  */
 class SessionAttendance extends \yii\db\ActiveRecord
 {
+        public $surnameSearch;
+        public $firstNameSearch;
+        public $gradeSearch;
+        
     /**
      * @inheritdoc
      */
@@ -40,9 +44,13 @@ class SessionAttendance extends \yii\db\ActiveRecord
     {
         return [
             'sat_id' => 'Sat ID',
-            'sat_session_id' => 'Sat Session ID',
-            'sat_student_id' => 'Sat Student ID',
-            'sat_present' => 'Sat Present',
+            'sat_session_id' => 'Session ID',
+            'sat_student_id' => 'Student ID',
+            'sat_present' => 'Present/Absent',
+            
+            'surnameSearch' => 'Surname',
+            'firstNameSearch' => 'First Name',
+            'gradeSearch' => 'Grade'
         ];
     }
     

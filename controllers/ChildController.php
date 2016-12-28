@@ -145,7 +145,10 @@ class ChildController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
+        $child = $this->findModel($id);
+        if(count($child->sessionAttendance) == 0){//if child is used in attendance, don't allow deleting
+            $child->delete();
+        }
 
         return $this->redirect(['index']);
     }

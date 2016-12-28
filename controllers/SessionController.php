@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\Child;
 use app\models\SessionAttendance;
+use app\models\SessionAttendanceSearch;
 /**
  * SessionController implements the CRUD actions for Session model.
  */
@@ -63,10 +64,9 @@ class SessionController extends Controller
     {
         $model = new Session();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {            
             //~~mark attendance for each child~~
-            $children = Child::find()->where("c_active  = 1")->all();
+            $children = Child::find()->where("c_active  = 1")->orderBy(['c_surname' => SORT_ASC, 'c_first_name' => SORT_ASC])->all();
 
             foreach ($children as $child){
                 $sessionAttendance = new SessionAttendance();
@@ -152,7 +152,7 @@ class SessionController extends Controller
     }
 
     
-    public function actionAttendance($id){
+    public function actionAttendance_old($id){
         $model = $this->findModel($id);
         
         //$children = Child::find()->where("c_active  = 1")->all();
@@ -165,6 +165,20 @@ class SessionController extends Controller
         ]);        
     }
 
+    public function actionAttendance($id)
+    {
+        $session = $this->findModel($id);
+        $searchModel = new SessionAttendanceSearch();
+        $searchModel->sat_session_id = $id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('attendance', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'session' => $session
+        ]);
+    }    
+    
         /**
      * Finds the Session model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

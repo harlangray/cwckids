@@ -84,6 +84,14 @@ class Child extends \yii\db\ActiveRecord {
     }
 
     public function getGrade(){
-        return$this->hasOne(Grade::className(), ['gd_id' => 'c_grade']);
+        return $this->hasOne(Grade::className(), ['gd_id' => 'c_grade']);
     }
+    
+    public function getSessionAttendance(){
+        return $this->hasMany(SessionAttendance::className(), ['sat_student_id' => 'c_id']);
+    }
+
+//        public function getUsedForAttendance(){
+//        return ;
+//    }
 }

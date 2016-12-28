@@ -13,12 +13,27 @@ $baseUrl = yii::$app->urlManager->getBaseUrl();
                 <h3 class="panel-title"><i class="glyphicon glyphicon-certificate"></i>Child Details</h3>            
             </div>
 
+            <?php
+            if($childMod->isNewRecord || count($childMod->sessionAttendance) == 0){
+                ?>
             <a title="Remove" onclick="removechildRow('child_row_<?= $index ?>')" style="float: right;">
                 <?php
                 $options = '';
                 echo Html::tag('div', Html::img($baseUrl . '/../images/close-me.png', $options), ['height' => '0px']);
                 ?>
             </a>
+            <?php
+            }else{
+            ?>
+            <a title="This child cannot be removed because the child's attendance has been marked previously. If the child is no longer active, please deactivate the child."  style="float: right;">
+                <?php
+                $options = '';
+                echo Html::tag('div', Html::img($baseUrl . '/../images/cannot-delete.png', $options), ['height' => '0px']);
+                ?>
+            </a>            
+            <?php 
+            }
+            ?>
         </div>
         <?php
 
