@@ -5,7 +5,7 @@ use yii\grid\GridView;
 use kartik\switchinput\SwitchInput;
 
 //use yii\bootstrap\Html;
-
+ 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SessionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
