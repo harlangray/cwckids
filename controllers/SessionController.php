@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use app\models\Child;
 use app\models\SessionAttendance;
 use app\models\SessionAttendanceSearch;
+use app\models\ChildSearch;
 /**
  * SessionController implements the CRUD actions for Session model.
  */
@@ -66,7 +67,7 @@ class SessionController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {            
             //~~mark attendance for each child~~
-            $children = Child::find()->where("c_active  = 1")->orderBy(['c_surname' => SORT_ASC, 'c_first_name' => SORT_ASC])->all();
+            $children = Child::find()->where("c_active  = 1 AND c_parent_guardian_id > 0")->orderBy(['c_surname' => SORT_ASC, 'c_first_name' => SORT_ASC])->all();
 
             foreach ($children as $child){
                 $sessionAttendance = new SessionAttendance();
@@ -179,7 +180,29 @@ class SessionController extends Controller
         ]);
     }    
     
-        /**
+    public function actionUpdateattendancelist($id){
+        $session = $this->findModel($id);
+        $searchModel = new SessionAttendanceSearch();
+        $searchModel->sat_session_id = $id;
+        $idsInList = $session->childIDs;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $searchNotInListMod = new ChildSearch();
+        $searchNotInListMod->excludeIDs = $idsInList;
+        $searchNotInListMod->c_active = 1;
+        $dataProvNotInList = $searchNotInListMod->search(Yii::$app->request->queryParams);
+        
+        return $this->render('updateAttendanceList', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            
+            'searchNotInListMod' => $searchNotInListMod,
+            'dataProvNotInList' => $dataProvNotInList,
+            'session' => $session
+        ]);        
+    }
+
+    /**
      * Finds the Session model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
@@ -218,5 +241,86 @@ class SessionController extends Controller
                 echo print_r($sesAtt->getErrors());
             }
         }
+    }
+    
+    public function actionRemovefromlist(){
+        $message = [];
+        if(isset($_POST['sessionAttID'])){
+            $sessionAttID = $_POST['sessionAttID'];
+            
+            $sesAttMod = SessionAttendance::findOne($sessionAttID);
+            if(isset($sesAttMod)){
+                if($sesAttMod->delete()){
+                    $message = ['status' => 'success', 'message' => 'Deleted successfully'];
+                }
+                else{
+                    $message = ['status' => 'failure', 'message' => 'Could not Deleted'];
+                }
+            }
+            else{
+                $message = ['status' => 'failure', 'message' => 'Cannot find record'];
+            }
+        }
+        
+        echo json_encode($message);
+    }
+    
+       
+    public function actionDeletesessionattendance($id, $sessionID)
+    {
+        if(($model = SessionAttendance::findOne($id)) !== null){
+            $model->delete();
+            Yii::$app->session->setFlash('success', yii::t('app', 'Removed <i>{attribute}</i> from this attendance list', ['attribute' => $model->child->c_first_name . ' ' . $model->child->c_surname]));                
+        }
+        else{
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        return $this->redirect(['updateattendancelist', 'id' => $sessionID]);
+    }
+    
+    public function actionAddtosessionattendance($childID, $sessionID){
+        $model = SessionAttendance::findOne("sat_session_id = $sessionID AND sat_student_id = $childID");
+        $child = Child::findOne($childID);
+        if(!isset($model) && isset($child)){
+            $model = new SessionAttendance();
+            $model->sat_session_id = $sessionID;
+            $model->sat_student_id = $childID;
+            $model->sat_present = 0;
+            if(!$model->save()){
+                die(print_r($model->getErrors()));
+            }
+            else{
+                Yii::$app->session->setFlash('success', yii::t('app', 'Added <i>{attribute}</i> to the attendance list', ['attribute' => $child->c_first_name . ' ' . $child->c_surname]));                
+            }
+        }
+
+        return $this->redirect(['updateattendancelist', 'id' => $sessionID]);        
+    }
+    
+        
+    public function actionQuickcreatechild($sessionID){
+       $model = new Child();
+       $model->c_parent_guardian_id = 0;
+       $model->c_toilet_trained = 1;
+       $model->c_medical_conditions = 0;
+       $model->c_behavioural_issue = 0;
+       $model->c_active = 1;
+       
+       if ($model->load(Yii::$app->request->post())){            
+            if($model->validate()){
+                $model->save();
+                $this->actionAddtosessionattendance($model->c_id, $sessionID);
+                //return $this->redirect(['session/updateattendancelist', 'id' => $sessionID]);
+            }
+            else{
+                die(print_r($model->getErrors()));
+            }
+       }
+       else{
+            return $this->renderAjax('quick_create_child', [
+                     'model' => $model,
+             ]);
+       }
     }
 }

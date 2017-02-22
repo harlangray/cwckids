@@ -1,16 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="3">
         <file>
             <url>controllers/ChildController.php</url>
+            <bookmark id="2">
+                <name/>
+                <line>63</line>
+                <key/>
+            </bookmark>
             <bookmark id="1">
                 <name/>
-                <line>109</line>
+                <line>119</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>controllers/SessionController.php</url>
+            <bookmark id="3">
+                <name/>
+                <line>296</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/xampp/htdocs/cwckids/views/session/quick_create_child.php</file>
+            <file>file:/C:/xampp/htdocs/cwckids/views/session/_form.php</file>
+            <file>file:/C:/xampp/htdocs/cwckids/composer.json</file>
+            <file>file:/C:/xampp/htdocs/cwckids/controllers/SessionController.php</file>
+            <file>file:/C:/xampp/htdocs/cwckids/models/SessionAttendance.php</file>
+            <file>file:/C:/xampp/htdocs/cwckids/views/session/updateAttendanceList.php</file>
+            <file>file:/C:/xampp/htdocs/cwckids/.gitignore</file>
+            <file>file:/C:/xampp/htdocs/cwckids/views/child/create.php</file>
+            <file>file:/C:/xampp/htdocs/cwckids/controllers/SiteController.php</file>
+        </group>
     </open-files>
 </project-private>

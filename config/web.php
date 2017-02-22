@@ -5,7 +5,7 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', 'admin',],
+    'bootstrap' => ['log',],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -67,7 +67,7 @@ $config = [
             'admins' => ['admin', 'andrew']
         ],
         'admin' => [
-            'class' => 'mdm\admin\Module',
+//            'class' => 'mdm\admin\Module',
 //            'mainLayout' => '@app/views/layouts/main.php',
         ],
         'backuprestore' => [
@@ -91,12 +91,12 @@ $config = [
             ]
         ],
     ],
-    'as access' => [
-        'class' => 'mdm\admin\classes\AccessControl',
-        'allowActions' => [
-//            'user/security/logout'           
-        ]
-    ],
+//    'as access' => [
+//        'class' => 'mdm\admin\classes\AccessControl',
+//        'allowActions' => [
+////            'user/security/logout'           
+//        ]
+//    ],
     'params' => $params,
 ];
 

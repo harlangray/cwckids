@@ -28,15 +28,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             [
                 'class' => 'app\components\ActionColumn',
-                'template' => '{view}{update}{delete}{attendance}',
-                'contentOptions' => ['style' => 'width: 250px;'],
+                'template' => '{view}{update}{updateattendancelist}{delete}{attendance}',
+                'contentOptions' => ['style' => 'width: 300px;'],
                 'header' => 'Actions',
                 'buttons' => [
                     'attendance' => function($url, $model, $key) {
                         $image = Html::img(yii::$app->urlManager->baseUrl . '/../images/attendance.png', ['style' => 'margin: 3px;']);
                         return Html::a($image, $url, ['title' => 'Mark Attendance']);
-                    }
-                        ],
+                    },
+                            'updateattendancelist' => function ($url, $model, $key){
+                        $image = Html::img(yii::$app->urlManager->baseUrl . '/../images/edit_attendance_list.png', ['style' => 'margin: 3px;']);
+                        return Html::a($image, $url, ['title' => 'Update Attendance List']);                        
+                            },
+                            ],
                     ],
                     'ssn_id',
                     'ssn_name',

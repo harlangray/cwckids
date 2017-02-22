@@ -16,6 +16,7 @@ class ChildSearch extends Child {
     public $birthdayMonth;
     public $ageGroup;
     public $grade;
+    public $excludeIDs;
 
     /**
      * @inheritdoc
@@ -104,6 +105,10 @@ class ChildSearch extends Child {
                 ->orFilterWhere(['like', 'c_medical_condition_note', $this->searchString])
                 ->orFilterWhere(['like', 'c_behavioural_note', $this->searchString]);
 
+        if(count($this->excludeIDs) > 0){
+            $query->andFilterWhere(['not in', 'c_id', $this->excludeIDs]);
+        }
+        
         if ($this->birthdayMonth > 0) {
             $query->andWhere("MONTH(c_date_of_birth) = {$this->birthdayMonth}");
         }
@@ -118,4 +123,5 @@ class ChildSearch extends Child {
         return $dataProvider;
     }
 
+    
 }

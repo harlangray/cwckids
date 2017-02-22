@@ -73,4 +73,13 @@ class Session extends \yii\db\ActiveRecord
     public function getMarkedBy(){
         return $this->hasOne(User::className(), ['id' => 'ssn_marked_by']);
     }
+    
+    public function getChildIDs(){
+        $childIDs = [];
+        $attendances = $this->sessionAttendance;
+        foreach ($attendances as $attendance){
+            $childIDs[] = $attendance->sat_student_id;
+        }
+        return $childIDs;
+    }
 }

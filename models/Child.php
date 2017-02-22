@@ -22,6 +22,7 @@ use Yii;
  * @property string $c_medical_condition_note
  * @property integer $c_behavioural_issue
  * @property string $c_behavioural_note
+ * @property string $c_parent_guardian_name
  * @property integer $c_active
  *
  * @property ParentGuardian $cParentGuardian
@@ -44,7 +45,7 @@ class Child extends \yii\db\ActiveRecord {
             [['c_parent_guardian_id', 'c_toilet_trained', 'c_grade', 'c_medical_conditions', 'c_behavioural_issue', 'c_active'], 'integer'],
             [['c_date_of_birth'], 'safe'],
             [['c_medical_condition_note', 'c_behavioural_note'], 'string'],
-            [['c_first_name', 'c_surname'], 'string', 'max' => 50],
+            [['c_first_name', 'c_surname', 'c_parent_guardian_name'], 'string', 'max' => 50],
             [['c_address'], 'string', 'max' => 60],
             [['c_suburb'], 'string', 'max' => 20],
             [['c_post_code'], 'string', 'max' => 5],
@@ -72,6 +73,7 @@ class Child extends \yii\db\ActiveRecord {
             'c_medical_condition_note' => 'Medical Condition Note',
             'c_behavioural_issue' => 'Behavioural Issue',
             'c_behavioural_note' => 'Behavioural Note',
+            'c_parent_guardian_name' => 'Parent/Guardian Name',
             'c_active' => 'Active'
         ];
     }

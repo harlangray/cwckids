@@ -17,6 +17,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <h4>Marked by <?= $session->markedBy->username; ?> </h4>
+    
+        <p>
+    <?= Html::a('Edit Attendance List', ['updateattendancelist', 'id' => $session->ssn_id], ['class' => 'btn btn-success']) ?>
+    </p>
+    
     <?php // echo $this->render('_search', ['model' => $searchModel]);   ?>
 
     <?=

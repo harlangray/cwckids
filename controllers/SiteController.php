@@ -88,59 +88,89 @@ class SiteController extends Controller {
     public function actionUpdate() {
 //        $sql = "ALTER TABLE `parent_guardian` CHANGE `pg_father_email` `pg_father_email` VARCHAR(60) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL, CHANGE `pg_mother_email` `pg_mother_email` VARCHAR(60) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;";
 
-        $sql = "CREATE TABLE `grade` (
-  `gd_id` int(11) NOT NULL,
-  `gd_name` varchar(20) NOT NULL,
-  `gd_sort_order` tinyint(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-INSERT INTO `grade` (`gd_id`, `gd_name`, `gd_sort_order`) VALUES
-(1, 'Pre School', 1),
-(2, 'Grade 1', 3),
-(3, 'Grade 2', 4),
-(4, 'Grade 3', 5),
-(5, 'Grade 4', 6),
-(6, 'Grade 5', 7),
-(7, 'Grade 6', 8),
-(8, 'Grade 7', 9),
-(9, 'Grade 8', 10),
-(10, 'Grade 9', 11),
-(11, 'Grade 10', 12),
-(12, 'Grade 11', 13),
-(13, 'Grade 12', 14),
-(14, 'Prep', 2);
-
-
-ALTER TABLE `grade`
-  ADD PRIMARY KEY (`gd_id`);
-
-ALTER TABLE `grade`
-  MODIFY `gd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;";
-        $connection = Yii::$app->getDb();
-        $command = $connection->createCommand($sql);
-        if($command->execute()){
-            echo 'Done';
-        }
-        else{
-            echo 'Could not execute';
-        }
+//        $sql = "CREATE TABLE `grade` (
+//  `gd_id` int(11) NOT NULL,
+//  `gd_name` varchar(20) NOT NULL,
+//  `gd_sort_order` tinyint(4) NOT NULL
+//) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+//
+//
+//INSERT INTO `grade` (`gd_id`, `gd_name`, `gd_sort_order`) VALUES
+//(1, 'Pre School', 1),
+//(2, 'Grade 1', 3),
+//(3, 'Grade 2', 4),
+//(4, 'Grade 3', 5),
+//(5, 'Grade 4', 6),
+//(6, 'Grade 5', 7),
+//(7, 'Grade 6', 8),
+//(8, 'Grade 7', 9),
+//(9, 'Grade 8', 10),
+//(10, 'Grade 9', 11),
+//(11, 'Grade 10', 12),
+//(12, 'Grade 11', 13),
+//(13, 'Grade 12', 14),
+//(14, 'Prep', 2);
+//
+//
+//ALTER TABLE `grade`
+//  ADD PRIMARY KEY (`gd_id`);
+//
+//ALTER TABLE `grade`
+//  MODIFY `gd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;";
+//        $connection = Yii::$app->getDb();
+//        $command = $connection->createCommand($sql);
+//        if($command->execute()){
+//            echo 'Done';
+//        }
+//        else{
+//            echo 'Could not execute';
+//        }
     }
 
     public function actionUpdatesession(){
-        $sql = "";
-        $connection = Yii::$app->getDb();
-        
-        $sql = "ALTER TABLE `session_attendance`
-  MODIFY `sat_id` int(11) NOT NULL AUTO_INCREMENT;";
-                
-        $command = $connection->createCommand($sql);        
-      
-        if($command->execute()){
-            echo 'Created Session Table';
-        }
-        else{
-            echo 'Could not execute';
-        }        
+//        $sql = "";
+//        $connection = Yii::$app->getDb();
+//        
+//        $sql = "ALTER TABLE `session_attendance`
+//  MODIFY `sat_id` int(11) NOT NULL AUTO_INCREMENT;";
+//                
+//        $command = $connection->createCommand($sql);        
+//      
+//        if($command->execute()){
+//            echo 'Created Session Table';
+//        }
+//        else{
+//            echo 'Could not execute';
+//        }        
     }
+    
+    public function actionRemoveparentconstraint(){
+//        $sql = "ALTER TABLE child DROP FOREIGN KEY parent_guardian;";
+//        $connection = Yii::$app->getDb();
+//        
+//        $command = $connection->createCommand($sql);
+//        
+//        if($command->execute()){
+//            echo 'Executed. Removed constraint to parent table';
+//        }
+//        else{
+//            echo 'Could not execute';
+//        }
+    }
+    
+    public function actionAddparentguardianname(){
+//        $sql = "ALTER TABLE `child` ADD `c_parent_guardian_name` VARCHAR(50) NULL AFTER `c_behavioural_note`;";
+//        $connection = Yii::$app->getDb();
+//        
+//        $command = $connection->createCommand($sql);
+//        
+//        if($command->execute()){
+//            echo 'Executed. ';
+//        }
+//        else{
+//            echo 'Could not execute';
+//        }        
+    }
+    
+    
 }
